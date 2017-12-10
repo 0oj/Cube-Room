@@ -11,5 +11,8 @@
     "url": "C:/Users/oojam/Ninja/cube-room/.git/"
   },
   "author": "Ooj Amit",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
 }
