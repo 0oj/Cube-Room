@@ -9,7 +9,7 @@ Router.get('/google', passport.authenticate('google', {
   scope: ['profile']
 }))
 Router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  res.send(req.user.username)
+  res.redirect('/dashboard/')
 })
 
 Router.get('/logout', (req, res) => {
