@@ -1,19 +1,24 @@
 var Router = require('express').Router();
 const passport = require('passport');
+const User = require('../models/user');
+
 
 Router.get('/login', (req, res) => {
-  res.render('login')
+  User.count({}, (err, users) => {
+    res.render('login', {users: users})
+  })
 })
 
 Router.get('/google', passport.authenticate('google', {
-  scope: ['profile']
+  scope: ['profile', 'email']
 }))
 Router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  res.redirect('/dashboard/')
+  res.redirect('/')
 })
 
 Router.get('/logout', (req, res) => {
-  res.send('Loggin\' ya out')
+  req.logout();
+  res.redirect('/auth/login/')
 })
 
 

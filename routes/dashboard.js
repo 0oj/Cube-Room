@@ -9,7 +9,7 @@ const authCheck = (req, res, next) => {
 }
 
 Router.get('/', authCheck, (req, res) => {
-  res.send(`You are, according to google, ${req.user.username}`)
+  res.render('dashboard', {user: req.user})
 })
 
 module.exports = Router;

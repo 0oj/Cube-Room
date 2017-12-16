@@ -24,10 +24,8 @@ mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongodb.dbURI, () => console.log('Conected to MongoDB'))
 
 app.use('/auth', require('./routes/auth'))
-app.use('/dashboard', require('./routes/dashboard'))
+app.use(require('./routes/dashboard'))
+app.use('/img', require('./routes/img'))
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html')
-})
 
 app.listen(port, () => console.log(`Listening at port ${port}`))
