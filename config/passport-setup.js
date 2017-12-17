@@ -1,6 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
 const GitHubStrategy = require('passport-github').Strategy;
+const TwitterStrategy = require('passport-twitter');
 const keys = require('./keys');
 const User = require('../models/user')
 
@@ -24,10 +25,10 @@ passport.use(
           username: profile.displayName,
           googleId: profile.id,
           email: profile.emails[0].value,
-          thumbnail: profile._json.image.url
+          thumbnail: profile._json.image.url,
+          provider: 'Google'
         }).save().then(newUser => done(null, newUser))
       }
-
     })
   })
 )
@@ -47,10 +48,32 @@ passport.use(
           username: profile.displayName,
           githubId: profile.id,
           email: profile.emails[0].value,
-          thumbnail: profile._json.avatar_url
+          thumbnail: profile._json.avatar_url,
+          provider: 'Github'
         }).save().then(newUser => done(null, newUser))
       }
+    })
+  })
+)
 
+passport.use(
+  new TwitterStrategy({
+    consumerKey: keys.twitter.clientID,
+    consumerSecret: keys.twitter.clientSecret,
+    callbackURL: "/auth/twitter/redirect"
+  }, (accessToken, refreshToken, profile, done) => {
+    User.findOne({twitterId: profile.id}).then((currentUser) => {
+      if (currentUser) {
+        console.log('User already in the DB');
+        done(null, currentUser)
+      } else {
+        new User({
+          username: profile.displayName,
+          twitterId: profile.id,
+          thumbnail: profile.photos[0].value,
+          provider: 'Twitter'
+        }).save().then(newUser => done(null, newUser))
+      }
     })
   })
 )
