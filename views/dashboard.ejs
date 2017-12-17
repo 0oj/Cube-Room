@@ -19,30 +19,38 @@
     #heading {
       color: white;
       padding-top: 2px;
-      float: left;
+      position: absolute;
       cursor: pointer;
       font-family: Amaranth;
     }
 
-    #name {
-      color: white;
+    #thumbnail {
       display: inline;
       cursor: pointer;
+      height: 40px;
     }
 
-    #name-dropdown {
+    #profile-dropdown {
       display: inline;
-      float: right;
-      padding-top: 15px;
+      position: absolute;
+      right: 15px;
+      padding-top: 10px;
     }
 
     #logo {
-      margin: auto;
       height: 60px;
     }
 
     a:hover {
       text-decoration: none;
+    }
+
+    .dropdown-item.disabled {
+      margin-bottom: 0px;
+    }
+
+    .dropdown-header {
+      padding-top: 2px;
     }
   </style>
 </head>
@@ -50,13 +58,18 @@
 <body>
   <header class="container-fluid text-center">
     <a href="/"><h1 id="heading">Cube-Room</h1></a>
-    <a href="/img/logo-white"><img id="logo" src="/img/logo-white" alt="Cube Room Logo"></a>
-    <div id="name-dropdown">
-      <h4 id="name" data-toggle="dropdown"><%= user.username %></h4>
+    <a href="/img/logo_white.png"><img id="logo" src="/img/logo_white.png" alt="Cube Room Logo"></a>
+    <div id="profile-dropdown">
+      <img src="<%= user.thumbnail %>" id="thumbnail" class="rounded" data-toggle="dropdown"></img>
       <div class="dropdown-menu dropdown-menu-right">
         <a class="dropdown-item" href="/auth/logout">Log Out</a>
         <div class="dropdown-divider"></div>
-        <p class="dropdown-header"><%= user.email %></p>
+        <p class="dropdown-item disabled">
+          <%= user.username %>
+        </p>
+        <p class="dropdown-header">
+          <%= user.email %>
+        </p>
       </div>
     </div>
   </header>

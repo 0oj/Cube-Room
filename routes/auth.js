@@ -9,12 +9,19 @@ Router.get('/login', (req, res) => {
   })
 })
 
+
 Router.get('/google', passport.authenticate('google', {
   scope: ['profile', 'email']
 }))
 Router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   res.redirect('/')
 })
+
+Router.get('/github', passport.authenticate('github', { failureRedirect: '/auth/login' }))
+Router.get('/github/redirect', passport.authenticate('github'), (req, res) => {
+  res.redirect('/')
+})
+
 
 Router.get('/logout', (req, res) => {
   req.logout();

@@ -19,7 +19,7 @@
         cursor: pointer;
       }
       #second{
-        background-image: url('/img/logo');
+        background-image: url('/img/logo.png');
         background-repeat: no-repeat;
         font-family: Amaranth;
         font-size: 1.2em;
@@ -33,9 +33,13 @@
       .sign-in img{
         height: 40px;
         border-right: 1px solid;
+        padding-right: 4px;
       }
       #google{
         background-color: #DC4B38;
+      }
+      #github{
+        background-color: #fff;
       }
     </style>
   </head>
@@ -47,7 +51,10 @@
     <div id="second" class="jumbotron jumbotron-fluid text-center">
       <p id="jingle">Do you cube? If you do, cube with me and <span id="users" class="text-primary" title="User count"><b><%= users %></b></span> others too.<br>Sign into my Cube-Room!</p>
       <p class="lead">
-        <a id="google" class="btn btn-lg sign-in text-white" href="/auth/google" role="button"><img src="/img/google" alt="Sign in with google"/> With Google</a>
+        <a id="google" class="btn btn-lg sign-in text-white" href="/auth/google" role="button"><img src="/img/google.jpg" alt="Sign in with google"/> With Google</a>
+      </p>
+      <p class="lead">
+        <a id="github" class="btn btn-lg sign-in text-dark" href="/auth/github" role="button"><img src="/img/github.svg" alt="Sign in with google"/> With GitHub</a>
       </p>
     </div>
     <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Rubik%27s_cube_scrambled.svg/1200px-Rubik%27s_cube_scrambled.svg.png" alt="It's me logo. logo logo logo logo logo"> -->
