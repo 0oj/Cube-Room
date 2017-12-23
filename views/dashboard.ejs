@@ -11,48 +11,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Amaranth" />
 
-  <style media="screen">
-    header {
-      background-color: #ff5353;
-    }
-
-    #heading {
-      color: white;
-      padding-top: 2px;
-      position: absolute;
-      cursor: pointer;
-      font-family: Amaranth;
-    }
-
-    #thumbnail {
-      display: inline;
-      cursor: pointer;
-      height: 40px;
-    }
-
-    #profile-dropdown {
-      display: inline;
-      position: absolute;
-      right: 15px;
-      padding-top: 10px;
-    }
-
-    #logo {
-      height: 60px;
-    }
-
-    a:hover {
-      text-decoration: none;
-    }
-
-    .dropdown-item.disabled {
-      margin-bottom: 0px;
-    }
-
-    .dropdown-header {
-      padding-top: 2px;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/header.css">
 </head>
 
 <body>
@@ -69,10 +28,22 @@
         </p>
         <p class="dropdown-header">
           <%= user.provider %>
+          <% if(user.WCAID){ %>
+                - <%= user.WCAID %>
+          <% } %>
         </p>
       </div>
     </div>
-  </header>
+  </header><!--  this is just the header -->
+
+  <!-- <div class="container-fluid">
+    <% if(rooms){
+       rooms.forEach(room => { %>
+          <p><%= room %></p>
+         <% })
+      } %>
+    <a href="/new"><button type="button" class="btn btn-light">New Room</button></a>
+  </div> -->
 
 
   <!-- Optional JavaScript -->

@@ -25,6 +25,7 @@ mongoose.connect(keys.mongodb.dbURI, () => console.log('Conected to MongoDB'))
 
 app.use('/auth', require('./routes/auth'))
 app.use(require('./routes/dashboard'))
+app.use(require('./routes/room'))
 
 
 app.listen(port, () => console.log(`Listening at port ${port}`))

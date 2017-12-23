@@ -2,6 +2,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
 const GitHubStrategy = require('passport-github').Strategy;
 const TwitterStrategy = require('passport-twitter');
+const WCAStrategy = require('passport-wca');
 const keys = require('./keys');
 const User = require('../models/user')
 
@@ -72,6 +73,29 @@ passport.use(
           twitterId: profile.id,
           thumbnail: profile.photos[0].value,
           provider: 'Twitter'
+        }).save().then(newUser => done(null, newUser))
+      }
+    })
+  })
+)
+
+passport.use(
+  new WCAStrategy({
+    clientID: keys.wca.clientID,
+    clientSecret: keys.wca.clientSecret,
+    callbackURL: "http://localhost:10003/auth/wca/redirect"
+  }, (accessToken, refreshToken, profile, done) => {
+    User.findOne({wcaId: profile.id}).then((currentUser) => {
+      if (currentUser) {
+        console.log('User already in the DB');
+        done(null, currentUser)
+      } else {
+        new User({
+          username: profile.displayName,
+          wcaId: profile.id,
+          thumbnail: profile.photos[0].value,
+          provider: 'WCA',
+          WCAID: profile.wca.id
         }).save().then(newUser => done(null, newUser))
       }
     })

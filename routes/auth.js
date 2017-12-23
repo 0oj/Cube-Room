@@ -19,6 +19,10 @@ Router.get('/github/redirect', passport.authenticate('github'), (req, res) => re
 Router.get('/twitter', passport.authenticate('twitter', { failureRedirect: '/auth/login' }))
 Router.get('/twitter/redirect', passport.authenticate('twitter'), (req, res) => res.redirect('/'))
 
+Router.get('/wca', passport.authenticate('wca', { failureRedirect: '/auth/login' }))
+Router.get('/wca/redirect', passport.authenticate('wca'), (req, res) => res.redirect('/'))
+
+
 Router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/auth/login/')

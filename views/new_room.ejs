@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Create new Room</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Amaranth" />
+
+    <link rel="stylesheet" href="/css/header.css">
+    <style media="screen">
+      form{
+        width: 450px;
+        margin: auto;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #ff5353;
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+      #new-room{
+        font-size: 4.2em;
+      }
+      hr{
+        background-color: white;
+        margin-bottom: 30px;
+      }
+      #inputs{
+        padding-left: 10px;
+        padding-top: 30px;
+      }
+
+      input{
+        border: none;
+        border-bottom: 1px solid white;
+        background-color: inherit;
+        display: block;
+        position: relative;
+        font-size: 1.5em;
+        z-index: 2;
+        color: white;
+      }
+
+      label{
+        display: block;
+        position: relative;
+        top: -38px;
+        left: 0px;
+        z-index: 1;
+        transition: all 0.4s ease;
+        font-size: 1.6em;
+        color: white;
+      }
+
+      input:focus, input:valid{
+        outline: none;
+        border-bottom: 1px solid black;
+      }
+
+      input:focus + label, input:valid + label{
+        top: -64px;
+        font-size: 1.2em;
+        color: black;
+      }
+
+
+      ::placeholder {
+        color: white;
+        opacity: 1;
+      }
+      :-ms-input-placeholder {
+        color: white;
+      }
+      ::-ms-input-placeholder {
+        color: white;
+      }
+
+      .profile-img{
+        height: 50px;
+        float: left;
+        margin-right: 4px;
+      }
+      ol#suggestions li{
+        list-style-type: none;
+        width: inherit;
+        margin-bottom: 5px;
+        cursor: pointer;
+        padding-top: 2px;
+      }
+      ol#suggestions li.suggestion:hover{
+        background-color: #f74444;
+      }
+
+      ol#suggestions{
+        padding-left: 0px;
+        width: 350px;
+        margin: 0px;
+        margin-top: -30px;
+        margin-bottom: 30px;
+      }
+      ol#suggestions li .lead{
+        margin-bottom: 0px;
+        margin-top: -4px;
+      }
+      ol#suggestions li h4{
+        margin-bottom: 0px;
+        margin-top: -2px;
+      }
+      .errors{
+        border: none;
+        margin-top: -30px;
+      }
+
+      ol#members{
+        list-style: none;
+        padding-left: 0px;
+      }
+
+      #members-container{
+        margin-top: 20px;
+        margin-bottom: 50px;
+      }
+
+      ol#members li img{
+        height: 35px;
+        float: left;
+        margin-right: 4px;
+      }
+
+      ol#members li h4{
+        font-size: 25px;
+      }
+
+      ol#members li{
+        padding-left: 2px;
+      }
+
+      button.btn-primary{
+        float: right;
+      }
+
+      /* The snackbar - position it at the bottom and in the middle of the screen */
+      #snackbar {
+        visibility: hidden; /* Hidden by default. Visible on click */
+        min-width: 250px; /* Set a default minimum width */
+        margin-left: -125px; /* Divide value of min-width by 2 */
+        background-color: #333; /* Black background color */
+        color: #fff; /* White text color */
+        text-align: center; /* Centered text */
+        border-radius: 2px; /* Rounded borders */
+        padding: 16px; /* Padding */
+        position: fixed; /* Sit on top of the screen */
+        z-index: 1; /* Add a z-index if needed */
+        left: 50%; /* Center the snackbar */
+        bottom: 30px; /* 30px from the bottom */
+      }
+
+      /* Show the snackbar when clicking on a button (class added with JavaScript) */
+      #snackbar.show {
+        visibility: visible; /* Show the snackbar */
+
+      /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+      However, delay the fade out process for 2.5 seconds */
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+
+      /* Animations to fade the snackbar in and out */
+      @-webkit-keyframes fadein {
+        from {bottom: 0; opacity: 0;}
+        to {bottom: 30px; opacity: 1;}
+      }
+
+      @keyframes fadein {
+        from {bottom: 0; opacity: 0;}
+        to {bottom: 30px; opacity: 1;}
+      }
+
+      @-webkit-keyframes fadeout {
+        from {bottom: 30px; opacity: 1;}
+        to {bottom: 0; opacity: 0;}
+      }
+
+      @keyframes fadeout {
+        from {bottom: 30px; opacity: 1;}
+        to {bottom: 0; opacity: 0;}
+      }
+    </style>
+  </head>
+  <body>
+    <header class="container-fluid text-center">
+      <a href="/"><h1 id="heading">Cube-Room</h1></a>
+      <a href="/img/logo_white.png"><img id="logo" src="/img/logo_white.png" alt="Cube Room Logo"></a>
+      <div id="profile-dropdown">
+        <img src="<%= user.thumbnail %>" id="thumbnail" class="rounded" data-toggle="dropdown"></img>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="/auth/logout">Log Out</a>
+          <div class="dropdown-divider"></div>
+          <p class="dropdown-item disabled">
+            <%= user.username %>
+          </p>
+          <p class="dropdown-header">
+            <%= user.provider %>
+            <% if(user.WCAID){ %>
+                  - <%= user.WCAID %>
+            <% } %>
+          </p>
+        </div>
+      </div>
+    </header><!--  this is just the header -->
+
+    <div class="container text-center text-white">
+      <form action="/new" method="POST">
+        <h1 id="new-room" class="display-2">New Room</h1>
+
+        <hr>
+
+        <div id="inputs" class="text-left">
+          <input type="text" id="name" required autocomplete="off" autofocus>
+          <label for="name">Name</label>
+
+          <div id="members-container">
+            <h3>Members-</h3>
+            <ol id="members"></ol>
+          </div>
+
+          <input type="text" id="member" required>
+          <label for="member">ADD Members</label>
+
+          <ol id="suggestions"></ol>
+
+          <a href="/"><button class="btn btn-light">Cancel</button></a>
+          <button class="btn btn-primary" type="submit">Create</button>
+
+          <!-- toast -->
+          <div id="snackbar">User already a member!</div>
+
+        </div>
+      </form>
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      function toast() {
+        // Get the snackbar DIV
+        var x = document.getElementById("snackbar")
+
+        // Add the "show" class to DIV
+        x.className = "show";
+
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+      }
+
+
+      var members_html = '';
+      var members = [];
+
+
+      $('input#member').keyup(() => {
+        var name = $.trim($('input#member').val());
+        var list = '';
+
+        if (name) {
+          $.ajax({
+            url: '/user?username=' + name,
+            success: users => {
+              if (users[0]) {
+                users.forEach(user => {
+                  list += (`<li class="suggestion"><img src=${user.thumbnail} alt="User Thumbnail" class="profile-img" /> <h4>${user.username}</h4> <p class="lead">${user._id}</p></li>`)
+                })
+                $('ol#suggestions').html(list)
+
+                $('ol#suggestions li').click(function(){
+                  var memberID = $(this).find('p.lead').text();
+
+                  if ($.inArray(memberID, members) === -1) {
+                    var memberName = $(this).find('h4').text();
+                    var memberPic = $(this).find('img').attr('src');
+
+                    members_html += `<li class="member"><img src="${memberPic}" alt="Member Thumbnail" /> <h4>${memberName}</h4>`;
+
+                    $('ol#members').html(members_html);
+                    $('#members-container').css('margin-bottom', '60px')
+
+                    members.push(memberID)
+                  }else{
+                    toast()
+                  }
+                });
+              } else{
+                $('ol#suggestions').html('<li class="errors"><h4>User not found</h4></li>')
+              }
+            }
+          })
+        } else {
+          $('ol#suggestions').html('<li class="errors"><h4>Enter a name</h4></li>');
+        }
+      });
+    </script>
+  </body>
+</html>
