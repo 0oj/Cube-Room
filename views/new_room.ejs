@@ -138,8 +138,9 @@
         padding-left: 2px;
       }
 
-      button.btn-primary{
-        float: right;
+      a.btn-primary{
+        position: relative;
+        left: 350px;
       }
 
       /* The snackbar - position it at the bottom and in the middle of the screen */
@@ -213,7 +214,7 @@
     </header><!--  this is just the header -->
 
     <div class="container text-center text-white">
-      <form action="/new" method="POST">
+      <form>
         <h1 id="new-room" class="display-2">New Room</h1>
 
         <hr>
@@ -227,13 +228,12 @@
             <ol id="members"></ol>
           </div>
 
-          <input type="text" id="member" required>
+          <input type="text" id="member" required autocomplete="off">
           <label for="member">ADD Members</label>
 
           <ol id="suggestions"></ol>
 
-          <a href="/"><button class="btn btn-light">Cancel</button></a>
-          <button class="btn btn-primary" type="submit">Create</button>
+          <a href="/" class="btn btn-primary">Create</a>
 
           <!-- toast -->
           <div id="snackbar">User already a member!</div>
@@ -265,6 +265,8 @@
 
       var members_html = '';
       var members = [];
+
+      members.push(<%- JSON.stringify(user.id) %>)
 
 
       $('input#member').keyup(() => {
@@ -307,6 +309,13 @@
           $('ol#suggestions').html('<li class="errors"><h4>Enter a name</h4></li>');
         }
       });
+
+      $('a.btn-primary').click(function(){
+        $.post( "/new", {
+          'name': $('input#name').val(),
+          'members[]': members
+        });
+      })
     </script>
   </body>
 </html>

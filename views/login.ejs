@@ -32,22 +32,23 @@
         font-family: Segoe UI;
         width: 220px;
         font-size: 1.2em;
+        background-color: white;
       }
       .sign-in img{
         height: 40px;
         border-right: 1px solid;
         padding-right: 6px;
+        margin-right: 4px;
       }
-      #google{
-        background-color: #DC4B38;
+      .sign-in-small img{
+        height: 45px;
       }
-      #github{
-        background-color: #fff;
+
+      hr{
+        width: 222px;
       }
-      #twitter{
-        background-color: #28AAE1;
-      }
-      #wca{
+
+      #linkedin img{
         background-color: white;
       }
     </style>
@@ -63,17 +64,20 @@
       <p id="jingle">Do you cube? If you do, cube with me and <span id="users" class="text-primary" title="User count"><b><%= users %></b></span> others too.<br>Sign into my Cube-Room!</p>
 
       <p class="lead">
-        <a id="google" class="btn btn-lg sign-in text-white text-left" href="/auth/google" role="button"><img src="/img/google.jpg" alt="Sign in with google"/> With Google</a>
+        <a id="google" class="btn btn-light btn-lg sign-in text-left" href="/auth/google" role="button"><img src="/img/google.png" alt="Sign in with google"/> Google</a>
       </p>
       <p class="lead">
-        <a id="wca" class="btn btn-lg sign-in text-dark text-left" href="/auth/wca" role="button"><img src="/img/wca.svg" alt="Sign in with WCA"/> With WCA</a>
+        <a id="facebook" class="btn btn-light btn-lg sign-in text-left" href="/auth/facebook" role="button"><img src="/img/facebook.png" alt="Sign in with Facebook"/> Facebook</a>
       </p>
       <p class="lead">
-        <a id="twitter" class="btn btn-lg sign-in text-white text-left" href="/auth/twitter" role="button"><img src="/img/twitter.png" alt="Sign in with Twitter"/> With Twitter</a>
+        <a id="wca" class="btn btn-light btn-lg sign-in text-left" href="/auth/wca" role="button"><img src="/img/wca.svg" alt="Sign in with WCA"/> WCA</a>
       </p>
-      <p class="lead">
-        <a id="github" class="btn btn-lg sign-in text-dark text-left" href="/auth/github" role="button"><img src="/img/github.svg" alt="Sign in with GitHub"/> With GitHub</a>
-      </p>
+
+      <hr>
+
+      <a id="twitter" class="sign-in-small" href="/auth/twitter" role="button"><img src="/img/twitter.png" alt="Sign in with Twitter"class="rounded"/></a>
+      <a id="linkedin" class="sign-in-small" href="/auth/linkedin" role="button"><img src="/img/linkedin.png" alt="Sign in with Linkedin"class="rounded"/></a>
+      <a id="github" class="sign-in-small" href="/auth/github" role="button"><img src="/img/github.png" alt="Sign in with GitHub"class="rounded"/></a>
 
     </div>
 

@@ -8,6 +8,7 @@ const UserSchema = new Schema({
   twitterId: String,
   wcaId: String,
   WCAID: String,
+  linkedinId: String,
   email: String,
   thumbnail: String,
   provider: String

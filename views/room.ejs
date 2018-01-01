@@ -1,16 +1,58 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Hello, world!</title>
+    <title>Room - <%= room.name %></title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Amaranth" />
+
+    <link rel="stylesheet" href="/css/header.css">
+    <style media="screen">
+      header{
+        background-color: white;
+        border-bottom: 1px solid #ff5353;
+      }
+      #heading{
+        color: #ff5353;
+      }
+      #room-name{
+        margin: auto;
+        text-align: center;
+        font-family: Amaranth;
+        background-color: #ff5353;
+        color: white;
+        padding-bottom: 6px;
+      }
+    </style>
   </head>
   <body>
-    <h1><%= id %></h1>
+    <header class="container-fluid text-center">
+      <a href="/"><h1 id="heading">Cube-Room</h1></a>
+      <a href="/img/logo.png"><img id="logo" src="/img/logo.png" alt="Cube Room Logo"></a>
+      <div id="profile-dropdown">
+        <img src="<%= user.thumbnail %>" id="thumbnail" class="rounded" data-toggle="dropdown"></img>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="/auth/logout">Log Out</a>
+          <div class="dropdown-divider"></div>
+          <p class="dropdown-item disabled">
+            <%= user.username %>
+          </p>
+          <p class="dropdown-header">
+            <%= user.provider %>
+            <% if(user.WCAID){ %>
+                  - <%= user.WCAID %>
+            <% } %>
+          </p>
+        </div>
+      </div>
+    </header><!--  this is just the header -->
+
+    
+    <h1 id="room-name"><b><%= room.name %></b></h1>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -11,9 +11,7 @@ const authCheck = (req, res, next) => {
 
 Router.get('/', authCheck, (req, res) => {
   Room.find({
-    users: {
-      $elemMatch: req.user.id
-    }
+    members: req.user.id
   }, (err, rooms) => {
     res.render('dashboard', {user: req.user, rooms: rooms})
   })

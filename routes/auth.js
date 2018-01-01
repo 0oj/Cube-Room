@@ -22,6 +22,9 @@ Router.get('/twitter/redirect', passport.authenticate('twitter'), (req, res) => 
 Router.get('/wca', passport.authenticate('wca', { failureRedirect: '/auth/login' }))
 Router.get('/wca/redirect', passport.authenticate('wca'), (req, res) => res.redirect('/'))
 
+Router.get('/linkedin', passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }))
+Router.get('/linkedin/redirect', passport.authenticate('linkedin'), (req, res) => res.redirect('/'))
+
 
 Router.get('/logout', (req, res) => {
   req.logout();

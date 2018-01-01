@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20');
 const GitHubStrategy = require('passport-github').Strategy;
 const TwitterStrategy = require('passport-twitter');
 const WCAStrategy = require('passport-wca');
+const LinkedinStrategy = require('passport-linkedin');
 const keys = require('./keys');
 const User = require('../models/user')
 
@@ -96,6 +97,28 @@ passport.use(
           thumbnail: profile.photos[0].value,
           provider: 'WCA',
           WCAID: profile.wca.id
+        }).save().then(newUser => done(null, newUser))
+      }
+    })
+  })
+)
+
+passport.use(
+  new LinkedinStrategy({
+    consumerKey: keys.linkedin.clientID,
+    consumerSecret: keys.linkedin.clientSecret,
+    callbackURL: "/auth/linkedin/redirect"
+  }, (accessToken, refreshToken, profile, done) => {
+    User.findOne({linkedinId: profile.id}).then((currentUser) => {
+      if (currentUser) {
+        console.log('User already in the DB');
+        done(null, currentUser)
+      } else {
+        new User({
+          username: profile.displayName,
+          linkedinId: profile.id,
+          thumbnail: 'https://static.licdn.com/scds/common/u/images/themes/katy/ghosts/person/ghost_person_80x80_v1.png',
+          provider: 'Linkedin'
         }).save().then(newUser => done(null, newUser))
       }
     })
