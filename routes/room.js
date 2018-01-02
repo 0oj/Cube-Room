@@ -11,7 +11,7 @@ const authCheck = (req, res, next) => {
 }
 const memberCheck = (req, res, next) => {
   Room.findOne({_id: req.params.id}, (err, room) => {
-    if (room.members.indexOf(req.user.id) === -1) {
+    if (!room.members.includes(req.user.id)) {
       res.send('<h1>You\'re not part of the Room</h1>')
     } else{
       res.locals.room = room;
@@ -34,7 +34,11 @@ Router.post('/new', (req, res) => {
 })
 
 Router.get('/user', (req, res) => {
-  User.find({'username': {'$regex': req.query.username, '$options': 'i'}}, (err, users) => res.send(users))
+  if (req.query.username) {
+    User.find({'username': {'$regex': req.query.username, '$options': 'i'}}, (err, users) => res.send(users))
+  } else{
+    User.findById(req.query.id, (err, user) => res.send(user))
+  }
 })
 
 module.exports = Router;

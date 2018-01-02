@@ -4,6 +4,7 @@ const GitHubStrategy = require('passport-github').Strategy;
 const TwitterStrategy = require('passport-twitter');
 const WCAStrategy = require('passport-wca');
 const LinkedinStrategy = require('passport-linkedin');
+const FacebookStrategy = require('passport-facebook');
 const keys = require('./keys');
 const User = require('../models/user')
 
@@ -122,5 +123,28 @@ passport.use(
         }).save().then(newUser => done(null, newUser))
       }
     })
+  })
+)
+
+passport.use(
+  new FacebookStrategy({
+    clientID: keys.facebook.clientID,
+    clientSecret: keys.facebook.clientSecret,
+    callbackURL: "/auth/facebook/redirect"
+  }, (accessToken, refreshToken, profile, done) => {
+    console.log(profile);
+    // User.findOne({facebookId: profile.id}).then((currentUser) => {
+    //   if (currentUser) {
+    //     console.log('User already in the DB');
+    //     done(null, currentUser)
+    //   } else {
+    //     new User({
+    //       username: profile.displayName,
+    //       facebookId: profile.id,
+    //       thumbnail: 'https://static.licdn.com/scds/common/u/images/themes/katy/ghosts/person/ghost_person_80x80_v1.png',
+    //       provider: 'Facebook'
+    //     }).save().then(newUser => done(null, newUser))
+    //   }
+    // })
   })
 )

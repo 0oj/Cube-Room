@@ -27,6 +27,10 @@
         color: white;
         padding-bottom: 6px;
       }
+      #thumbnail{
+        padding: 2px;
+        background-color: #ff5353;
+      }
     </style>
   </head>
   <body>
@@ -51,13 +55,57 @@
       </div>
     </header><!--  this is just the header -->
 
-    
+
     <h1 id="room-name"><b><%= room.name %></b></h1>
+
+    <h1>Members-</h1>
+    <ul id="members">
+      <li v-for="member in members" v-bind:class="">
+        <h4 v-if="member.id === userID">You</h4>
+        <h4 v-else>{{member.username}}</h4>
+        <p class="lead">{{member.id}}</p>
+      </li>
+    </ul>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue"></script>
+
+    <script type="text/javascript">
+      var memberIDs = <%- JSON.stringify(room.members) %>
+      var members = [];
+
+      memberIDs.forEach(id => {
+        $.ajax({
+          url: '/user?id=' + id,
+          success: user => {
+            members.push({
+              id: user._id,
+              username: user.username,
+              thumbnail: user.thumbnail
+            })
+          }
+        })
+      })
+
+      var MemberList = new Vue({
+        el: '#members',
+        data: {
+          members: members,
+          userID: <%- JSON.stringify(user.id) %>
+        },
+        methods: {
+
+        },
+        computed: {
+
+        }
+      })
+
+
+    </script>
   </body>
 </html>

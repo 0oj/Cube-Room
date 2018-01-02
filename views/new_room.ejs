@@ -138,7 +138,7 @@
         padding-left: 2px;
       }
 
-      a.btn-primary{
+      button.btn-primary{
         position: relative;
         left: 350px;
       }
@@ -233,7 +233,7 @@
 
           <ol id="suggestions"></ol>
 
-          <a href="/" class="btn btn-primary">Create</a>
+          <button href="/" class="btn btn-primary">Create</button>
 
           <!-- toast -->
           <div id="snackbar">User already a member!</div>
@@ -279,7 +279,11 @@
             success: users => {
               if (users[0]) {
                 users.forEach(user => {
-                  list += (`<li class="suggestion"><img src=${user.thumbnail} alt="User Thumbnail" class="profile-img" /> <h4>${user.username}</h4> <p class="lead">${user._id}</p></li>`)
+                  if(user._id === <%- JSON.stringify(user.id) %>){
+                    list += (`<li class="suggestion"><img src=${user.thumbnail} alt="User Thumbnail" class="profile-img" /> <h4>${user.username} (you)</h4> <p class="lead">${user._id}</p></li>`)
+                  } else{
+                    list += (`<li class="suggestion"><img src=${user.thumbnail} alt="User Thumbnail" class="profile-img" /> <h4>${user.username}</h4> <p class="lead">${user._id}</p></li>`)
+                  }
                 })
                 $('ol#suggestions').html(list)
 
@@ -310,11 +314,12 @@
         }
       });
 
-      $('a.btn-primary').click(function(){
+      $('button.btn-primary').click(function(){
         $.post( "/new", {
           'name': $('input#name').val(),
           'members[]': members
         });
+        window.location.href = "/";
       })
     </script>
   </body>
