@@ -10,7 +10,7 @@ const UserSchema = new Schema({
   WCAID: String,
   linkedinId: String,
   facebookId: String,
-  email: String,
+  emails: [String],
   thumbnail: String,
   provider: String
 });
