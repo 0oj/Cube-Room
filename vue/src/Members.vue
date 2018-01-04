@@ -4,7 +4,8 @@
     <ul>
       <li v-for="member in members">
         <img class="member-thumbnail" v-bind:src="member.thumbnail" alt="Member thumbnail">
-        <h4 class="member-username">{{ member.username }}</h4>
+        <h4 v-if="you(member.id)" class="member-username">You</h4>
+        <h4 v-else class="member-username">{{ member.username }}</h4>
         <p class="member-id">{{ member.id }}</p>
       </li>
     </ul>
@@ -31,23 +32,35 @@
     name: 'members',
     data () {
       return {
-        members: members
+        members: members,
+        userID: userID
+      }
+    },
+    methods: {
+      you(id){
+        if (id === userID) {
+          return true
+        }else{
+          return false
+        }
       }
     }
   }
-
 </script>
 
 <style scoped>
   li{
     list-style-type: none;
     margin: 4px;
+    margin-left: 0px;
     padding: 4px;
-    border: 1px solid white;
+    padding-left: 8px;
   }
   ul{
     padding-left: 0px;
     padding: 5px;
+    height: 420px;
+    overflow-y: auto;
   }
   #members{
     background-color: #ff5353;
@@ -61,7 +74,7 @@
     height: 48px;
     padding-right: 2px;
     margin-right: 4px;
-    border-right: 1px solid white;
+    border-radius: 50%;
   }
   .member-username{
     margin: 0px;

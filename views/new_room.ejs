@@ -138,7 +138,7 @@
         padding-left: 2px;
       }
 
-      button.btn-primary{
+      a.btn-primary{
         position: relative;
         left: 350px;
       }
@@ -224,7 +224,7 @@
           <label for="name">Name</label>
 
           <div id="members-container">
-            <h3>Members-</h3>
+            <h3>Members- <span id="memberCount">(1)</span></h3>
             <ol id="members"></ol>
           </div>
 
@@ -233,7 +233,7 @@
 
           <ol id="suggestions"></ol>
 
-          <button href="/" class="btn btn-primary">Create</button>
+          <a href="/" class="btn btn-primary">Create</a>
 
           <!-- toast -->
           <div id="snackbar">User already a member!</div>
@@ -298,6 +298,7 @@
 
                     $('ol#members').html(members_html);
                     $('#members-container').css('margin-bottom', '60px')
+                    $('#memberCount').text(`(${members.length + 1})`)
 
                     members.push(memberID)
                   }else{
@@ -314,12 +315,11 @@
         }
       });
 
-      $('button.btn-primary').click(function(){
+      $('a.btn-primary').click(function(){
         $.post( "/new", {
           'name': $('input#name').val(),
           'members[]': members
         });
-        window.location.href = "/";
       })
     </script>
   </body>
