@@ -1,22 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
+import Members from './Members.vue';
+
+Vue.component('members', Members)
 
 new Vue({
   el: '#app',
   render: h => h(App)
-})
-
-var members = [];
-
-memberIDs.forEach(id => {
-  $.ajax({
-    url: '/user?id=' + id,
-    success: user => {
-      members.push({
-        id: user._id,
-        username: user.username,
-        thumbnail: user.thumbnail
-      })
-    }
-  })
 })

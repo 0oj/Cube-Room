@@ -27,7 +27,7 @@ passport.use(
         new User({
           username: profile.displayName,
           googleId: profile.id,
-          emails: profile.emails,
+          emails: profile.emails.map(obj => obj.value),
           thumbnail: profile._json.image.url,
           provider: 'Google'
         }).save().then(newUser => done(null, newUser))
@@ -50,7 +50,7 @@ passport.use(
         new User({
           username: profile.displayName,
           githubId: profile.id,
-          emails: profile.emails,
+          emails: profile.emails.map(obj => obj.value),
           thumbnail: profile._json.avatar_url,
           provider: 'Github'
         }).save().then(newUser => done(null, newUser))
