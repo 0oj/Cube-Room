@@ -85,7 +85,7 @@ passport.use(
   new WCAStrategy({
     clientID: keys.wca.clientID,
     clientSecret: keys.wca.clientSecret,
-    callbackURL: "http://localhost:10003/auth/wca/redirect"
+    callbackURL: "/auth/wca/redirect"
   }, (accessToken, refreshToken, profile, done) => {
     User.findOne({wcaId: profile.id}).then((currentUser) => {
       if (currentUser) {
