@@ -6,13 +6,15 @@
         <img class="member-thumbnail" v-bind:src="member.thumbnail" alt="Member thumbnail">
         <h4 v-if="you(member.id)" class="member-username">You</h4>
         <h4 v-else class="member-username">{{ member.username }}</h4>
-        <p class="member-id">{{ member.id }}</p>
+        <p class="member-online">{{ online(member.online) }}</p>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+  var socket = io.connect();
+
   var members = [];
 
   memberIDs.forEach(id => {
@@ -22,11 +24,21 @@
         members.push({
           id: user._id,
           username: user.username,
-          thumbnail: user.thumbnail
+          thumbnail: user.thumbnail,
+          online: user.online
         })
       }
     })
   })
+
+  socket.on('update', user => {
+    members.forEach(member => {
+      if(member.id === user.id){
+        member.online = user.online;
+      }
+    })
+  })
+
 
   export default {
     name: 'members',
@@ -42,6 +54,13 @@
           return true
         }else{
           return false
+        }
+      },
+      online(online){
+        if (online) {
+          return "online"
+        } else {
+          return "offline"
         }
       }
     }

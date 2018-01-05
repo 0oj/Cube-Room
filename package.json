@@ -25,6 +25,7 @@
     "passport-linkedin": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "passport-wca": "^1.0.2",
-    "serve-favicon": "^2.4.5"
+    "serve-favicon": "^2.4.5",
+    "socket.io": "^2.0.4"
   }
 }

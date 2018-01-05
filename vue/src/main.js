@@ -8,3 +8,11 @@ new Vue({
   el: '#app',
   render: h => h(App)
 })
+
+var socket = io.connect()
+
+socket.emit('online', userID)
+window.onbeforeunload = () => {
+  socket.emit('offline', userID)
+  return null;
+}

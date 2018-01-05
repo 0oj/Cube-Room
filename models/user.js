@@ -12,7 +12,11 @@ const UserSchema = new Schema({
   facebookId: String,
   emails: [String],
   thumbnail: String,
-  provider: String
+  provider: String,
+  online: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const User = mongoose.model('user', UserSchema);
