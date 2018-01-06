@@ -1,6 +1,7 @@
 <template>
   <div>
     <members/>
+    <timer/>
   </div>
 </template>
 
@@ -15,6 +16,9 @@
   }
 </script>
 
-<style>
-
+<style scoped>
+  div{
+    display: flex;
+    flex-direction: row;
+  }
 </style>

@@ -3,48 +3,22 @@
     <h1>Members</h1>
     <ul>
       <li v-for="member in members">
-        <img class="member-thumbnail" v-bind:src="member.thumbnail" alt="Member thumbnail">
+        <img class="member-thumbnail" :src="member.thumbnail" alt="Member thumbnail">
         <h4 v-if="you(member.id)" class="member-username">You</h4>
         <h4 v-else class="member-username">{{ member.username }}</h4>
-        <p class="member-online">{{ online(member.online) }}</p>
+        <span class="member-online" :class="{online: member.online}">&#9679;</span>
+        <p class="member-status">{{member.status}}</p>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-  var socket = io.connect();
-
-  var members = [];
-
-  memberIDs.forEach(id => {
-    $.ajax({
-      url: '/user?id=' + id,
-      success: user => {
-        members.push({
-          id: user._id,
-          username: user.username,
-          thumbnail: user.thumbnail,
-          online: user.online
-        })
-      }
-    })
-  })
-
-  socket.on('update', user => {
-    members.forEach(member => {
-      if(member.id === user.id){
-        member.online = user.online;
-      }
-    })
-  })
-
-
   export default {
     name: 'members',
     data () {
       return {
-        members: members,
+        members: [],
         userID: userID
       }
     },
@@ -55,14 +29,33 @@
         }else{
           return false
         }
-      },
-      online(online){
-        if (online) {
-          return "online"
-        } else {
-          return "offline"
-        }
       }
+    },
+    created(){
+      var socket = io.connect();
+
+      memberIDs.forEach(id => {
+        $.ajax({
+          url: '/user?id=' + id,
+          success: user => {
+            this.members.push({
+              id: user._id,
+              username: user.username,
+              thumbnail: user.thumbnail,
+              online: user.online,
+              status: 'idle'
+            })
+          }
+        })
+      })
+
+      socket.on('update', user => {
+        this.members.forEach(member => {
+          if(member.id === user.id){
+            member[user.whatToUpdate] = user.updateTo;
+          }
+        })
+      })
     }
   }
 </script>
@@ -85,8 +78,11 @@
     background-color: #ff5353;
     margin-top: 15px;
     color: white;
-    width: 320px;
+    flex-grow: 1;
     margin-left: 10px;
+    display: inline-block;
+    max-width: 350px;
+    float: left;
   }
   .member-thumbnail{
     float: left;
@@ -101,9 +97,26 @@
   }
   .member-online{
     margin: 0px;
-    font-size: 1em;
+    font-size: 1.4em;
+    color: #ed3c3c;
+    position: relative;
+    right: 20px;
   }
   h1{
-    padding-left: 5px;
+    padding-left: 10px;
+  }
+  .online{
+    color: #93e83f;
+    margin: 1px solid black;
+  }
+  .member-status{
+    font-size: 1em;
+    color: white;
+    margin: 0px;
+    display: inline;
+    position: relative;
+    right: 20px;
+    bottom: 5px;
+    color: rgb(240, 240, 240);
   }
 </style>
