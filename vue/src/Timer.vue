@@ -1,6 +1,6 @@
 <template>
   <div id="timer" tabindex="1">
-    {{count/100}} s
+    {{getTime}}
   </div>
 </template>
 
@@ -9,7 +9,8 @@
     name: 'timer',
     data () {
       return {
-        count: 0,
+        start: 0,
+        elapsed: 0,
         counter: null
       }
     },
@@ -21,18 +22,33 @@
     },
     methods: {
       startTimer: function(e){
-        console.log('startTimer');
         if (e.keyCode === 32){
-          this.counter = setInterval(() => this.count++, 10);
+          this.start = performance.now()
+          this.counter = setInterval(() => {
+            this.elapsed = performance.now() - this.start;
+          })
           $(window).unbind('keyup')
           $(window).keydown(this.stopTimer)
         }
       },
       stopTimer: function(e){
-        console.log('stopTimer');
         if (e.keyCode === 32) {
           clearInterval(this.counter)
         }
+      }
+    },
+    computed: {
+      getTime(){
+        let millis = this.elapsed.toFixed(0);
+        let minutes = Math.floor(millis / (1000 * 60) % 60);
+        let seconds = Math.floor(millis / 1000 % 60);
+        let hundreths = Math.floor(millis /10 % 100);
+
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        hundreths = hundreths < 10 ? '0' + hundreths : hundreths;
+
+        return minutes + ':' + seconds + ':' + hundreths;
       }
     }
   }
