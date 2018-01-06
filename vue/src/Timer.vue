@@ -5,6 +5,8 @@
 </template>
 
 <script>
+  var socket = io.connect();
+
   export default {
     name: 'timer',
     data () {
@@ -15,13 +17,22 @@
       }
     },
     created(){
-      var socket = io.connect();
+      socket.on('solved', data => {
+        if (data.roomID === room._id) {
+          $.ajax({
+            url: '/user?id=' + data.userID,
+            success(user){
+              alert(`${user.username} solved in ${(data.time/1000).toFixed(2)}secs`)
+            }
+          })
+        }
+      })
     },
     mounted(){
       $(window).keyup(this.startTimer);
     },
     methods: {
-      startTimer: function(e){
+      startTimer(e){
         if (e.keyCode === 32){
           this.start = performance.now()
           this.counter = setInterval(() => {
@@ -31,9 +42,16 @@
           $(window).keydown(this.stopTimer)
         }
       },
-      stopTimer: function(e){
+      stopTimer(e){
         if (e.keyCode === 32) {
-          clearInterval(this.counter)
+          clearInterval(this.counter);
+          socket.emit('solved', {
+            userID: userID,
+            roomID: room._id,
+            time: this.elapsed
+          })
+
+          $(window).unbind('keydown')
         }
       }
     },

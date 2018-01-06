@@ -34,7 +34,7 @@
     created(){
       var socket = io.connect();
 
-      memberIDs.forEach(id => {
+      room.members.forEach(id => {
         $.ajax({
           url: '/user?id=' + id,
           success: user => {
